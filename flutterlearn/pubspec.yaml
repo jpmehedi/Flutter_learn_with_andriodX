@@ -34,6 +34,12 @@ flutter:
 
   assets:
     - assets/note1.wav
+    - assets/note2.wav
+    - assets/note3.wav
+    - assets/note4.wav
+    - assets/note5.wav
+    - assets/note6.wav
+    - assets/note7.wav
     
 
 
