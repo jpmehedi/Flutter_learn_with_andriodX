@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audio_cache.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
 
@@ -22,13 +23,25 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+
+    // Set portrait orientation
+/*SystemChrome.setPreferredOrientations([
+   DeviceOrientation.portraitDown,
+   DeviceOrientation.portraitUp,
+]);*/
+
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: Text('Home page'),
         ),
         body: SafeArea(
-          child: Column(
+          child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               builFunc(color: Colors.red, soundNumber: 1),
