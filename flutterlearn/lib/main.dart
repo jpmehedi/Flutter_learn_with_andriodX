@@ -1,60 +1,111 @@
 import 'package:flutter/material.dart';
-import 'package:audioplayers/audio_cache.dart';
-import 'package:flutter/services.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(Quizzler());
 
-class MyApp extends StatelessWidget {
-  void soundFunc(int soundNumber) {
-    final player = AudioCache();
-    player.play('note$soundNumber.wav');
-  }
-
-  Expanded builFunc({Color color, int soundNumber}) {
-    return Expanded(
-      child: FlatButton(
-        color: color,
-        onPressed: () {
-          soundFunc(soundNumber);
-        },
-      ),
-    );
-  }
-
+class Quizzler extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
-
-    // Set portrait orientation
-/*SystemChrome.setPreferredOrientations([
-   DeviceOrientation.portraitDown,
-   DeviceOrientation.portraitUp,
-]);*/
-
-
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('Home page'),
-        ),
+        backgroundColor: Colors.grey.shade900,
         body: SafeArea(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              builFunc(color: Colors.red, soundNumber: 1),
-              builFunc(color: Colors.green, soundNumber: 2),
-              builFunc(color: Colors.blue, soundNumber: 3),
-              builFunc(color: Colors.orange, soundNumber: 4),
-              builFunc(color: Colors.yellow, soundNumber: 5),
-              builFunc(color: Colors.purple, soundNumber: 6),
-              builFunc(color: Colors.grey, soundNumber: 7),
-            ],
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            child: QuizPage(),
           ),
         ),
       ),
     );
   }
 }
+
+class QuizPage extends StatefulWidget {
+  @override
+  _QuizPageState createState() => _QuizPageState();
+}
+
+class _QuizPageState extends State<QuizPage> {
+  List<Icon> scoreCard = [];
+  List<String> question = [
+    'You can lead a cow down stairs but not up stairs.',
+    'Approximately one quarter of human bones are in the feet.',
+    'A slug\'s blood is green.',
+  ];
+  int questionNumber = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Expanded(
+          flex: 5,
+          child: Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Center(
+              child: Text(
+               question [questionNumber],
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 25.0,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ),
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.all(15.0),
+            child: FlatButton(
+              textColor: Colors.white,
+              color: Colors.green,
+              child: Text(
+                'True',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20.0,
+                ),
+              ),
+              onPressed: () {
+                setState(() {
+                 questionNumber++;
+                });
+                //The user picked true.
+              },
+            ),
+          ),
+        ),
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.all(15.0),
+            child: FlatButton(
+              color: Colors.red,
+              child: Text(
+                'False',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.white,
+                ),
+              ),
+              onPressed: () {
+                setState(() {
+                    questionNumber++;
+                });
+             
+              },
+            ),
+          ),
+        ),
+        Row(children: scoreCard)
+      ],
+    );
+  }
+}
+
+/*
+question1: 'You can lead a cow down stairs but not up stairs.', false,
+question2: 'Approximately one quarter of human bones are in the feet.', true,
+question3: 'A slug\'s blood is green.', true,
+*/
